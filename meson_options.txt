@@ -17,7 +17,8 @@ option(
 		'native',
 		'stlink',
 		'stlinkv3',
-		'swlink'
+		'swlink',
+		'tutorduino'
 	],
 	value: '',
 	description: 'Hardware platform where the BMD firmware will run'

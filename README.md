@@ -228,6 +228,28 @@ You should now see the resulting binaries in `build`, in this case:
 
 These are the binary files you will use to flash to your probe.
 
+#### Tutorduino
+
+The tutorduino is an in-house BMP clone built around an STM32F103C8T6.  A
+dedicated cross-file is provided that pre-configures the correct probe,
+target set, and SWO encoding:
+
+```sh
+meson setup build-tutorduino --cross-file cross-file/tutorduino.ini
+meson compile -C build-tutorduino          # BMP firmware
+meson compile -C build-tutorduino boot-bin # DFU bootloader
+```
+
+To flash both images to the board via an ST-Link v2 connected to the target's
+SWD header, use the provided script:
+
+```sh
+scripts/flash-tutorduino.sh
+```
+
+See [`src/platforms/tutorduino/README.md`](src/platforms/tutorduino/README.md)
+for full pin mapping, DFU update instructions, and GDB usage.
+
 #### Building the bootloader
 
 If your probe hardware does not already have a bootloader on it, after building firmware as described above
