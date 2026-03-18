@@ -50,14 +50,15 @@ extern bool debug_bmp;
  * LED2     = PB11  (Red LED    : Error)
  *
  * TPWR     = PB0  (input)  -- analogue ADC1, CH8
- * nTRST    = PB1  (output)
+ * nTRST    = PB1  (output) -- shared with PWR_BR
+ * TMS_DIR  = PA1  (output) -- SWDIO direction (input low, output high)
  * nRST     = PA2  (output)
  * TDI      = PA3  (output)
  * TMS      = PA4  (input/output for SWDIO)
  * TCK      = PA5  (output SWCLK)
- * TDO      = PA6  (input)
+ * TDO      = PA6  (input)  -- also TIM3 CH1
  * nRST_SNS = PA7  (input)
- * TRACESWO = PB7  (input)  -- TDO hardwired to TRACESWO
+ * TRACESWO = PA6  (input)  -- hardwired to TDO (TIM3 CH1, Manchester SWO)
  *
  * USB_PU   = PA8  (output)
  * USB_VBUS = PB13 (input)
