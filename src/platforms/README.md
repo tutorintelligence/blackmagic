@@ -5,6 +5,7 @@ used by (multiple) platforms.
 
 ## Implementation directories
 
+* tutorduino: Firmware for the Tutor Intelligence tutorduino — an in-house STM32F103-based BMP clone
 * native: Firmware for [Black Magic Probe](https://1bitsquared.com/products/black-magic-probe)
 * stlink: Firmware for ST-Link v2 and ST-Link v2.1
 * swlink:  Firmware for ST-Link v1 and Bluepill
