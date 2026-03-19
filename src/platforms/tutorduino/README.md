@@ -52,6 +52,19 @@ The cross-file enables only the targets needed for the primary use-case
 
 ## Building
 
+### Prerequisites
+
+| Tool | Install |
+|------|---------|
+| `arm-none-eabi-gcc` | `sudo apt install gcc-arm-none-eabi` (Ubuntu) |
+| `meson` | `pip install meson` |
+| `ninja` | `pip install ninja` (or `sudo apt install ninja-build`) |
+
+> **libopencm3 wrap note:** `deps/libopencm3.wrap` must use `revision = main`.
+> The GitHub repo's default branch (`HEAD`) points to an empty `archive` branch;
+> meson will silently clone an almost-empty directory and then fail with
+> "Subproject exists but has no meson.build file" if the revision is wrong.
+
 ```sh
 # From the repository root:
 meson setup build-tutorduino --cross-file cross-file/tutorduino.ini
@@ -91,6 +104,25 @@ openocd \
 64 KiB in their device ID register, but physically have 128 KiB.  Without the
 `set FLASH_SIZE 0x20000` line, OpenOCD will fail when it tries to write the
 firmware above address `0x08010000`.
+
+### Alternative: STM32_Programmer_CLI (no OpenOCD required)
+
+If OpenOCD is unavailable, STM32CubeProgrammer's CLI tool works too and does
+not require the flash-size override — it writes past the reported 64 KiB limit
+without complaint:
+
+```sh
+STM32_Programmer_CLI \
+    --connect port=SWD freq=4000 reset=HWrst \
+    --erase all \
+    --write build-tutorduino/blackmagic_tutorduino_bootloader.bin 0x08000000 \
+    --write build-tutorduino/blackmagic_tutorduino_firmware.bin   0x08002000 \
+    --verify \
+    --go 0x08000000
+```
+
+After a few seconds the probe enumerates as two CDC-ACM ports (VID/PID
+`1d50:6018`).
 
 ### Subsequent updates via DFU
 
